@@ -4,7 +4,7 @@
 # # # # # # # # # # # # # # # # # # # # # # # #
 
 # Verzeichnis, das gesichert werden soll
-SOURCE_DOCKER_compose="/var/lib/docker/volumes/portainer_data/_data/compose"
+SOURCE_DOCKER_COMPOSE="/var/lib/docker/volumes/portainer_data/_data/compose"
 SOURCE_DOCKER_CONTAINERS="/var/lib/docker/containers"
 SOURCE_DOCKER_VOLUMES="/var/lib/docker/volumes"
 #SOURCE_DOCKER_images=""
@@ -44,7 +44,7 @@ if [ ! -d $BACKUPDIR ]; then
 fi
 
 # terminal message
-echo -e "Stopping Docker Containers:\n"
+echo -e "\n $TIMESTAMP Stopping Docker Containers:\n"
 # Docker-Container herunterfahren
 #docker stop $(docker ps -q)
 docker stop $(docker ps --format '{{.Names}}')
