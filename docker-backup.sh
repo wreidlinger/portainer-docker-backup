@@ -19,7 +19,7 @@ TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
 
 # define names for the backup archives
 BACKUP_FILENAME_DOCKER_COMPOSE="${TIMESTAMP}-docker-compose.tar.gz"
-echo -e "\n $BACKUP_FILENAME_DOCKER_COMPOSE"
+#echo -e "\n $BACKUP_FILENAME_DOCKER_COMPOSE"
 #BACKUP_FILENAME_DOCKER_CONTAINERS="${TIMESTAMP}-docker-containers.tar.gz"
 #BACKUP_FILENAME_DOCKER_VOLUMES="${TIMESTAMP}-docker-volumes.tar.gz"
 
@@ -31,7 +31,7 @@ echo -e "\n $BACKUP_FILENAME_DOCKER_COMPOSE"
 
 # build full path for the backup archives
 BACKUP_FULLPATH_DOCKER_COMPOSE="${BACKUPDIR}/${BACKUP_FILENAME_DOCKER_COMPOSE}"
-echo -e "\n $BACKUP_FULLPATH_DOCKER_COMPOSE"
+#echo -e "\n $BACKUP_FULLPATH_DOCKER_COMPOSE"
 BACKUP_FULLPATH_DOCKER_CONTAINERS="${BACKUPDIR}/${BACKUP_FILENAME_DOCKER_CONTAINERS}"
 BACKUP_FULLPATH_DOCKER_VOLUMES="${BACKUPDIR}/${BACKUP_FILENAME_DOCKER_VOLUMES}"
 
@@ -54,7 +54,8 @@ echo -e "\n $TIMESTAMP Start Backup Docker Compose,Containers,Volumes Data.\n"
 # c-Erstellen, p-Rechte behalten, f-Datei, z-Mit gzip komprimieren
 # --absolute-names
 # Don't strip leading slashes from file names when creating archives.
-#tar -cpfz "${BACKUP_FULLPATH_DOCKER_COMPOSE}" --absolute-names "${SOURCE_DOCKER_COMPOSE}"
+echo -e "\n $TIMESTAMP Archiving and Compressing Docker Compose Data:\n"
+tar cfvz "${BACKUP_FULLPATH_DOCKER_COMPOSE}.tar.gz" "${SOURCE_DOCKER_COMPOSE}"
 #tar -cpfz "${BACKUP_FULLPATH_DOCKER_CONTAINERS}" --absolute-names "${SOURCE_DOCKER_CONTAINERS}"
 #tar -cpfz "${BACKUP_FULLPATH_DOCKER_VOLUMES}" --absolute-names "${SOURCE_DOCKER_VOLUMES}"
 
