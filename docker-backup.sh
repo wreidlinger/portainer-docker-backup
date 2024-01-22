@@ -6,9 +6,9 @@ SOURCE_DOCKER_CONTAINERS="/var/lib/docker/containers"
 SOURCE_DOCKER_VOLUMES="/var/lib/docker/volumes"
 #SOURCE_DOCKER_images=""
 echo -e "\n Set source directories:"
-echo -e "\n Docker Compose Data: $SOURCE_DOCKER_COMPOSE"
-echo -e "\n Docker Containers Data: $SOURCE_DOCKER_CONTAINERS"
-echo -e "\n Docker Volumes Data: $SOURCE_DOCKER_VOLUMES"
+echo -e "Docker Compose Data:    "$SOURCE_DOCKER_COMPOSE""
+echo -e "Docker Containers Data: "$SOURCE_DOCKER_CONTAINERS""
+echo -e "Docker Volumes Data:    "$SOURCE_DOCKER_VOLUMES""
 
 # define, main backup destination location
 BACKUPDIR="/home/docktainer/backup"
@@ -57,11 +57,8 @@ echo -e "\n Start Backup Docker Compose,Containers,Volumes Data.\n"
 # c-Erstellen, p-Rechte behalten, f-Datei, z-Mit gzip komprimieren
 # --absolute-names
 # Don't strip leading slashes from file names when creating archives.
-echo -e "\n\n Archiving and Compressing Docker Compose Data:"
 tar cfz "${BACKUP_FULLPATH_DOCKER_COMPOSE}" --absolute-names "${SOURCE_DOCKER_COMPOSE}"
-echo -e "\n\n Archiving and Compressing Docker Container Data:"
 tar cfz "${BACKUP_FULLPATH_DOCKER_CONTAINERS}" --absolute-names "${SOURCE_DOCKER_CONTAINERS}"
-echo -e "\n\n Archiving and Compressing Docker Volumes Data:"
 tar cfz "${BACKUP_FULLPATH_DOCKER_VOLUMES}" --absolute-names "${SOURCE_DOCKER_VOLUMES}"
 
 # restart ALL Docker-Container
@@ -82,4 +79,4 @@ tar cfz "${BACKUP_FULLPATH_DOCKER_VOLUMES}" --absolute-names "${SOURCE_DOCKER_VO
 #ssh "${remote_target}" "find ${remote_dir} -type f -name '*-backup.tar.gz' -mtime +$keep_backups -exec rm {} \;"
 
 # terminal message
-echo -e "\n\n Backup Docker Data completed!\n"
+echo -e "\n Backup Docker Data completed!\n"
