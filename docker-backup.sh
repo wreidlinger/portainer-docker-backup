@@ -15,7 +15,7 @@ BACKUPDIR="/home/docktainer/backup"
 echo -e "\n\n[] Set backup directory: $BACKUPDIR"
 
 # define number of local backups to keep
-NUM_KEEP_BACKUP=10
+NUM_KEEP_BACKUP=7
 
 # define current date/time in a specific format
 # example data: 2024-01-22_14-07-23
@@ -66,15 +66,10 @@ tar cfz "${BACKUP_FULLPATH_DOCKER_VOLUMES}" --absolute-names "${SOURCE_DOCKER_VO
 echo -e "\n[] Starting Docker Containers:\n"
 docker start $(docker ps -a --format '{{.Names}}')
 
- 
-# Komprimiere das Backup-Archiv
-#gzip "${backup_fullpath}"
-#backup_fullpath="${backup_fullpath}.gz"
-
 # Kopiere das Backup auf den Zielserver mit SCP ohne Passwort
 #scp "${backup_fullpath}" "${remote_target}:$remote_dir/"
 # Lösche ältere lokale Backups mit `find`
-#find "$BACKUPDIR" -type f -name "*-backup.tar.gz" -mtime +$keep_backups -exec rm {} \;
+find "$BACKUPDIR" -type f -name "*-backup-compose.tar.gz" -mtime +$NUM_KEEP_BACKUP -exec rm {} \;
 # Lösche ältere remote Backups mit `find`
 #ssh "${remote_target}" "find ${remote_dir} -type f -name '*-backup.tar.gz' -mtime +$keep_backups -exec rm {} \;"
 
