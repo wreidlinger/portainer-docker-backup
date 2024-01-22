@@ -47,7 +47,7 @@ fi
 echo -e "[]\n Stopping Docker Containers:\n"
 # shut down all current running docker containers
 #docker stop $(docker ps -q)
-#docker stop $(docker ps --format '{{.Names}}')
+docker stop $(docker ps --format '{{.Names}}')
 
 # terminal message
 echo -e "\n[] Start Backup Docker Compose,Containers,Volumes Data.\n"
@@ -63,7 +63,8 @@ tar cfz "${BACKUP_FULLPATH_DOCKER_VOLUMES}" --absolute-names "${SOURCE_DOCKER_VO
 # restart ALL Docker-Container
 # missing improvement, restart only container not stopped bevor executing the line:
 # >>docker stop $(docker ps --format '{{.Names}}')
-#docker start $(docker ps -a --format '{{.Names}}')
+echo -e "\n[] Starting Docker Containers:\n"
+docker start $(docker ps -a --format '{{.Names}}')
 
  
 # Komprimiere das Backup-Archiv
