@@ -5,14 +5,14 @@ SOURCE_DOCKER_COMPOSE="/var/lib/docker/volumes/portainer_data/_data/compose"
 SOURCE_DOCKER_CONTAINERS="/var/lib/docker/containers"
 SOURCE_DOCKER_VOLUMES="/var/lib/docker/volumes"
 #SOURCE_DOCKER_images=""
-echo -e "[] Set source directories:"
+echo -e "\n[] Set source directories:"
 echo -e "Docker Compose Data:    "$SOURCE_DOCKER_COMPOSE""
 echo -e "Docker Containers Data: "$SOURCE_DOCKER_CONTAINERS""
 echo -e "Docker Volumes Data:    "$SOURCE_DOCKER_VOLUMES""
 
 # define, main backup destination location
 BACKUPDIR="/home/docktainer/backup"
-echo -e "\n\n[] Set backup directory: $BACKUPDIR"
+echo -e "\n\n\[\] Set backup directory: $BACKUPDIR"
 
 # define number of local backups to keep
 NUM_KEEP_BACKUP=10
