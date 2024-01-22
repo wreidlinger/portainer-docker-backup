@@ -5,14 +5,14 @@ SOURCE_DOCKER_COMPOSE="/var/lib/docker/volumes/portainer_data/_data/compose"
 SOURCE_DOCKER_CONTAINERS="/var/lib/docker/containers"
 SOURCE_DOCKER_VOLUMES="/var/lib/docker/volumes"
 #SOURCE_DOCKER_images=""
-echo -e "\n Set source directories:"
+echo -e "[] Set source directories:"
 echo -e "Docker Compose Data:    "$SOURCE_DOCKER_COMPOSE""
 echo -e "Docker Containers Data: "$SOURCE_DOCKER_CONTAINERS""
 echo -e "Docker Volumes Data:    "$SOURCE_DOCKER_VOLUMES""
 
 # define, main backup destination location
 BACKUPDIR="/home/docktainer/backup"
-echo -e "\n\n Set backup directory: $BACKUPDIR"
+echo -e "\n\n[] Set backup directory: $BACKUPDIR"
 
 # define number of local backups to keep
 NUM_KEEP_BACKUP=10
@@ -23,7 +23,6 @@ TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
 
 # define names for the backup archives
 BACKUP_FILENAME_DOCKER_COMPOSE="${TIMESTAMP}-docker-compose.tar.gz"
-#echo -e "\n $BACKUP_FILENAME_DOCKER_COMPOSE"
 BACKUP_FILENAME_DOCKER_CONTAINERS="${TIMESTAMP}-docker-containers.tar.gz"
 BACKUP_FILENAME_DOCKER_VOLUMES="${TIMESTAMP}-docker-volumes.tar.gz"
 
@@ -45,13 +44,13 @@ if [ ! -d $BACKUPDIR ]; then
 fi
 
 # terminal message
-echo -e "\n Stopping Docker Containers:\n"
+echo -e "[]\n Stopping Docker Containers:\n"
 # shut down all current running docker containers
 #docker stop $(docker ps -q)
 #docker stop $(docker ps --format '{{.Names}}')
 
 # terminal message
-echo -e "\n Start Backup Docker Compose,Containers,Volumes Data.\n"
+echo -e "\n[] Start Backup Docker Compose,Containers,Volumes Data.\n"
 
 # create the comporessed backup archive files
 # c-Erstellen, p-Rechte behalten, f-Datei, z-Mit gzip komprimieren
@@ -79,4 +78,4 @@ tar cfz "${BACKUP_FULLPATH_DOCKER_VOLUMES}" --absolute-names "${SOURCE_DOCKER_VO
 #ssh "${remote_target}" "find ${remote_dir} -type f -name '*-backup.tar.gz' -mtime +$keep_backups -exec rm {} \;"
 
 # terminal message
-echo -e "\n Backup Docker Data completed!\n"
+echo -e "[] Backup Docker Data completed!\n"
