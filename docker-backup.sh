@@ -1,24 +1,22 @@
 #!/bin/bash
-# # # # # # # # # # # # # # # # # # # # # # # #
-#                Konfiguration                #
-# # # # # # # # # # # # # # # # # # # # # # # #
 
-# Verzeichnis, das gesichert werden soll
+# define, source directories to backup
 SOURCE_DOCKER_COMPOSE="/var/lib/docker/volumes/portainer_data/_data/compose"
 SOURCE_DOCKER_CONTAINERS="/var/lib/docker/containers"
 SOURCE_DOCKER_VOLUMES="/var/lib/docker/volumes"
 #SOURCE_DOCKER_images=""
 
-# Verzeichnis, in dem die Backups gespeichert werden sollen
+# define, main backup destination location
 BACKUPDIR="/home/docktainer/backup"
 
-# Anzahl der zu behaltenden Backups
+# define number of local backups to keep
 NUM_KEEP_BACKUP=10
 
-# Aktuelles Datum und Uhrzeit
+# define current date/time in a specific format
+# example data: 2024-01-22_14-07-23
 TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
 
-# Name für das Backup-Archiv
+# define names for the backup archives
 BACKUP_FILENAME_DOCKER_COMPOSE="${TIMESTAMP}-docker-compose.tar.gz"
 BACKUP_FILENAME_DOCKER_CONTAINERS="${TIMESTAMP}-docker-containers.tar.gz"
 BACKUP_FILENAME_DOCKER_VOLUMES="${TIMESTAMP}-docker-volumes.tar.gz"
@@ -27,12 +25,9 @@ BACKUP_FILENAME_DOCKER_VOLUMES="${TIMESTAMP}-docker-volumes.tar.gz"
 #remote_user="root"
 #remote_server="192.168.40.50"
 #remote_dir="/opt/docker_backups"
-
-# # # # # # # # # # # # # # # # # # # # # # # #
-#           GO TIME                           #
-# # # # # # # # # # # # # # # # # # # # # # # #
-
 #remote_target="${remote_user}@${remote_server}"
+
+# build full path for the backup archives
 BACKUP_FULLPATH_DOCKER_COMPOSE="${BACKUPDIR}/${BACKUP_FILENAME_DOCKER_COMPOSE}"
 BACKUP_FULLPATH_DOCKER_CONTAINERS="${BACKUPDIR}/${BACKUP_FILENAME_DOCKER_CONTAINERS}"
 BACKUP_FULLPATH_DOCKER_VOLUMES="${BACKUPDIR}/${BACKUP_FILENAME_DOCKER_VOLUMES}"
@@ -45,14 +40,14 @@ fi
 
 # terminal message
 echo -e "\n $TIMESTAMP Stopping Docker Containers:\n"
-# Docker-Container herunterfahren
+# shut down all current running docker containers
 #docker stop $(docker ps -q)
 docker stop $(docker ps --format '{{.Names}}')
 
 # terminal message
 echo -e "\n $TIMESTAMP Start Backup Docker Compose,Containers,Volumes Data.\n"
 
-# Erstelle das Backup-Archiv
+# create the comporessed backup archive files
 # c-Erstellen, p-Rechte behalten, f-Datei, z-Mit gzip komprimieren
 # --absolute-names
 # Don't strip leading slashes from file names when creating archives.
@@ -77,5 +72,5 @@ docker start $(docker ps -a --format '{{.Names}}')
 # Lösche ältere remote Backups mit `find`
 #ssh "${remote_target}" "find ${remote_dir} -type f -name '*-backup.tar.gz' -mtime +$keep_backups -exec rm {} \;"
 
+# terminal message
 echo -e "\n\n$TIMESTAMP Backup Docker Data completed!\n"
-#echo "Backup wurde erstellt: ${backup_fullpath} und auf ${remote_target} kopiert."
