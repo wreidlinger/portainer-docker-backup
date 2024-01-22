@@ -53,15 +53,19 @@ docker stop $(docker ps --format '{{.Names}}')
 echo -e "\n $TIMESTAMP Start Backup Docker Compose,Containers,Volumes Data.\n"
 
 # Erstelle das Backup-Archiv
-# c-Erstellen, f-Datei, p-Rechte behalten, z-Mit gzip komprimieren
-tar -cpfz "${BACKUP_FULLPATH_DOCKER_COMPOSE}" "${SOURCE_DOCKER_COMPOSE}"
-tar -cpfz "${BACKUP_FULLPATH_DOCKER_CONTAINERS}" "${SOURCE_DOCKER_CONTAINERS}"
-tar -cpfz "${BACKUP_FULLPATH_DOCKER_VOLUMES}" "${SOURCE_DOCKER_VOLUMES}"
+# c-Erstellen, p-Rechte behalten, f-Datei, z-Mit gzip komprimieren
+# --absolute-names
+# Don't strip leading slashes from file names when creating archives.
+tar -cpfz "${BACKUP_FULLPATH_DOCKER_COMPOSE}" --absolute-names "${SOURCE_DOCKER_COMPOSE}"
+#tar -cpfz "${BACKUP_FULLPATH_DOCKER_CONTAINERS}" --absolute-names "${SOURCE_DOCKER_CONTAINERS}"
+#tar -cpfz "${BACKUP_FULLPATH_DOCKER_VOLUMES}" --absolute-names "${SOURCE_DOCKER_VOLUMES}"
 
-# Docker-Container wieder starten
-#docker start $(docker ps -a -q)
+# restart ALL Docker-Container
+# missing improvement, restart only container not stopped bevor executing the line:
+# >>docker stop $(docker ps --format '{{.Names}}')
 docker start $(docker ps -a --format '{{.Names}}')
 
+ 
 # Komprimiere das Backup-Archiv
 #gzip "${backup_fullpath}"
 #backup_fullpath="${backup_fullpath}.gz"
